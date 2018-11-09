@@ -22,8 +22,9 @@ client.on('message', message => {
 				//return;
 			//}
 			const fetched = await message.channel.fetchMessages()
+			message.channel.send(fetched)
 			message.channel.bulkDelete(fetched)
-				.catch(error => message.channel.send('Error: ' + error))
+				.catch(error => message.channel.send('Error: ' + error).then(message.delete(3000)))
 		}
 		purge();
 	} else
