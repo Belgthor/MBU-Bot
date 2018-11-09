@@ -14,7 +14,7 @@ client.on('message', message => {
 		async function purge(){
 			message.delete();
 			if (!message.member.roles.find('name', 'Server Admin')) {
-				message.channel.send('You need the \'Server Admin\' role').then(msg => {msg.delete(10000))
+				message.channel.send('You need the \'Server Admin\' role').then(msg => msg.delete(10000))
 				return;
 			}
 			//if (isNaN(args[0])) {
@@ -22,7 +22,7 @@ client.on('message', message => {
 				//return;
 			//}
 			message.channel.bulkDelete(100)
-				.catch(error => message.channel.send('Error: ' + error)).then(msg => {msg.delete(10000))
+				.catch(error => message.channel.send('Error: ' + error)).then(msg => msg.delete(10000))
 		}
 		purge();
 	} else
