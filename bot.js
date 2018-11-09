@@ -6,11 +6,28 @@ client.on('ready', () => {
 });
 client.on('message', message => {
 	if (!message.content.startsWith(prefix)) return;
-	if (message.content.startsWith(prefix + 'purge')) {
-		message.channel.send('command does not exist');
+	let msg = message.content.toUpperCase();
+	let sender = message.author;
+	let cont = message.content.slice(prefix.length).split(' ');
+	let args = cont.slice(1);
+	if (msg.startsWith(prefix + 'PURGE')) {
+		async function purge(){
+			message.delete();
+			if (!message.member.roles.find('name', 'Server Admin'))
+				message.channel.send('You need the \'Server Admin\' role');
+				return;
+			if (isNan(args[0])){
+				message.channel.send('Please use a number as your arguments. \n Usage: ' + prefix + 'purge <amount>');
+				return;
+			}
+			const fetched = await message.channel.fetchMessages({limit: args[0]})
+			message.channel.bulkDelete(fetched)
+				.catch(error => message.channel.send('Error: $(error)'))
+		}
+		purge();
 	} else
-	if (message.content.startsWith(prefix + 'ping')) {
+	if (msg.startsWith(prefix + 'PING')) {
 		message.channel.send('pong');
 	}
 });
-client.login(process.env.BOT_TOKEN);//where BOT_TOKEN is the token of our bot
+client.login(process.env.BOT_TOKEN);
