@@ -22,7 +22,6 @@ client.on('message', message => {
 				//return;
 			//}
 			message.channel.bulkDelete(100)
-				.then(msg => message.channel.send('Success deleted ' + msg.size + ' messages'))
 				.catch(error => message.channel.send('Error: ' + error).then(msg => msg.delete(10000))
 		}
 		purge();
