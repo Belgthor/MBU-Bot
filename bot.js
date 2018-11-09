@@ -14,7 +14,7 @@ client.on('message', message => {
 		async function purge(){
 			message.delete();
 			if (!message.member.roles.find('name', 'Server Admin')) {
-				message.channel.send('You need the \'Server Admin\' role');
+				message.channel.send('You need the \'Server Admin\' role').then(botmsg => {botmsg.delete(10000))
 				return;
 			}
 			//if (isNaN(args[0])) {
@@ -24,7 +24,7 @@ client.on('message', message => {
 			const fetched = await message.channel.fetchMessages()
 			message.channel.send(fetched)
 			message.channel.bulkDelete(fetched)
-				.catch(error => message.channel.send('Error: ' + error).then(message.delete(3000)))
+				.catch(error => message.channel.send('Error: ' + error).then(botmsg => {botmsg.delete(10000))
 		}
 		purge();
 	} else
