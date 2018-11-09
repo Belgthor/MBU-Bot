@@ -16,7 +16,7 @@ client.on('message', message => {
 			if (!message.member.roles.find('name', 'Server Admin'))
 				message.channel.send('You need the \'Server Admin\' role');
 				return;
-			if (isNan(args[0])){
+			if (isNaN(args[0])){
 				message.channel.send('Please use a number as your arguments. \n Usage: ' + prefix + 'purge <amount>');
 				return;
 			}
