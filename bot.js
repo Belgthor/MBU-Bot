@@ -21,7 +21,6 @@ client.on('message', message => {
 				message.channel.send('Please use a number as your arguments. \n Usage: ' + prefix + 'purge <amount>');
 				return;
 			}
-			message.channel.send('pass')
 			const fetched = await message.channel.fetchMessages({limit: args[0]})
 			message.channel.bulkDelete(fetched)
 				.catch(error => message.channel.send('Error: ${error}'))
