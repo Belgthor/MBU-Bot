@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const RichEmbed = require('discord.js');
+const embed = new Discord.RichEmbed()
 const client = new Discord.Client();
 const prefix = '!'
 client.on('ready', () => {
@@ -19,8 +19,9 @@ client.on('message', message => {
 				message.channel.send('You need the \'Server Admin\' role').then(msg => msg.delete(10000))
 				return;
 			}
-			message.channel.fetchMessage()
+			message.channel.fetchMessages({limit: 1})
 				.then(msg => msg.delete())
+				.catch(error => message.channel.send('Error: ' + error))
 			//if (isNaN(args[0])) {
 				//message.channel.send('Please use a number as your arguments. \n Usage: ' + prefix + 'purge <amount>');
 				//return;
@@ -32,10 +33,11 @@ client.on('message', message => {
 		}
 		purge();
 	} else if (msg.startsWith(prefix + 'PING')) {
-		const embed = new RichEmbed()
-			.setTitle('Title')
-			.setColor(0xFF0000)
-			.setDescription('Description')
+			embed.setTitle('Title')
+			embed.setColor(0xFF0000)
+			embed.setDescription('Description')
+			embed.setURL('URL')
+			embed.setAuthor('Author')
 		message.channel.send(embed);
 	} else {
 		message.channel.send('that I do not know');
