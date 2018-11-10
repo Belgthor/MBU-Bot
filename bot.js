@@ -19,9 +19,13 @@ client.on('message', message => {
 				return;
 			}
 			message.channel.fetchMessages()
-				.then(msg => message.channel.send(`Received ${msg.size} messages`))
+				.then((msg) => {
+					msg.forEach(x => x.delete())
+					message.channel.send(`Deleted ${msg.size} messages`)
+				})
 				.then(msg => msg.delete(5000))
 				.catch(error => message.channel.send(`Error: ${error}`))
+				
 			//if (isNaN(args[0])) {
 				//message.channel.send('Please use a number as your arguments. \n Usage: ' + prefix + 'purge <amount>');
 				//return;
