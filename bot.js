@@ -18,9 +18,9 @@ client.on('message', message => {
 				message.channel.send('You need the \'Server Admin\' role').then(msg => msg.delete(10000))
 				return;
 			}
-			message.channel.fetchMessages()
+			message.channel.fetchMessages({ limit: 1 })
 				.then(msg =>  message.channel.send(`Received ${msg.size} messages`))
-				.catch(error => message.channel.send('Error: ' + error))
+				.catch(error => message.channel.send(`Error: ${error}`))
 			//if (isNaN(args[0])) {
 				//message.channel.send('Please use a number as your arguments. \n Usage: ' + prefix + 'purge <amount>');
 				//return;
