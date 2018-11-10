@@ -19,7 +19,7 @@ client.on('message', message => {
 				return;
 			}
 			message.channel.fetchMessages({ limit: 1 })
-				.then(msg =>  message.channel.send(`Received ${msg.size} messages`))
+				.then(msg =>  message.channel.send(`Received ${msg.author} messages`))
 				.catch(error => message.channel.send(`Error: ${error}`))
 			//if (isNaN(args[0])) {
 				//message.channel.send('Please use a number as your arguments. \n Usage: ' + prefix + 'purge <amount>');
