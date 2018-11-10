@@ -31,13 +31,14 @@ client.on('message', message => {
 				//.then(msg => msg.delete(10000))
 		}
 		purge();
-	} else
-	if (msg.startsWith(prefix + 'PING')) {
+	} else if (msg.startsWith(prefix + 'PING')) {
 		const embed = new RichEmbed()
 			.setTitle('Title')
 			.setColor(0xFF0000)
 			.setDescription('Description')
 		message.channel.send(embed);
+	} else {
+		message.channel.send('that I do not know');
 	}
 });
 client.login(process.env.BOT_TOKEN);
