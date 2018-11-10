@@ -7,10 +7,6 @@ client.on('ready', () => {
 client.on('message', message => {
 	if (message.author.bot) { return; }
 	if (!message.content.startsWith(prefix)) { return; }
-	if (!message.member.roles.find('name', 'Server Admin')) {
-		message.channel.send('You need the \'Server Admin\' role').then(msg => msg.delete(5000))
-		return;
-	}
 	let msg = message.content.toUpperCase();
 	let sender = message.author;
 	let args = message.content.slice(prefix.length).split(/ +/g);
@@ -18,11 +14,12 @@ client.on('message', message => {
 	if (msg.startsWith(prefix + 'PURGE')) {
 		async function purge(){
 			message.delete();
+			if (!message.member.roles.find('name', 'Server Admin')) {
+				message.channel.send('You need the \'Server Admin\' role').then(msg => msg.delete(5000))
+				return;
+			}
 			message.channel.fetchMessages()
-				.then(
-					msg => msg.forEach((x) => {if(!x.pinned){x.delete()}})
-					message.channel.send(`Deleted ${msg.size} messages`).then(y => y.delete(5000))
-				)
+				.then(msg => msg.forEach((x) => {if(!x.pinned){x.delete()}}))
 				//.then(msg => message.channel.send(`Deleted ${msg.size} messages`)
 				//.then(msg => msg.delete(5000))
 				.catch(error => message.channel.send(`Error: ${error}`))
