@@ -18,8 +18,8 @@ client.on('message', message => {
 				message.channel.send('You need the \'Server Admin\' role').then(msg => msg.delete(10000))
 				return;
 			}
-			message.channel.fetchMessages({limit: 2})
-				.then(msg => msg.delete())
+			message.channel.fetchMessages()
+				.then(msg =>  message.channel.send(`Received ${msg.size} messages`))
 				.catch(error => message.channel.send('Error: ' + error))
 			//if (isNaN(args[0])) {
 				//message.channel.send('Please use a number as your arguments. \n Usage: ' + prefix + 'purge <amount>');
@@ -33,13 +33,8 @@ client.on('message', message => {
 		purge();
 	} else if (msg.startsWith(prefix + 'PING')) {
 		message.delete();
-		var embed = new Discord.RichEmbed()
-			.setTitle('Title')
-			.setColor(0xFF0000)
-			.setDescription('Description')
-			.setURL('URL')
-			.setAuthor('Author');
-		message.channel.sendEmbed(embed);
+		message.channel.send('pong')
+			.then(msg => msg.delete(10000))
 	} else {
 		message.channel.send('that I do not know');
 	}
