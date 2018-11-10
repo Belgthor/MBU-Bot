@@ -15,11 +15,12 @@ client.on('message', message => {
 		async function purge(){
 			message.delete();
 			if (!message.member.roles.find('name', 'Server Admin')) {
-				message.channel.send('You need the \'Server Admin\' role').then(msg => msg.delete(10000))
+				message.channel.send('You need the \'Server Admin\' role').then(msg => msg.delete(5000))
 				return;
 			}
-			message.channel.fetchMessages({ limit: 1 })
-				.then(msg =>  message.channel.send(`Received ${msg.author} messages`))
+			message.channel.fetchMessages()
+				.then(msg => message.channel.send(`Received ${msg.size} messages`))
+				.then(msg => msg.delete(5000))
 				.catch(error => message.channel.send(`Error: ${error}`))
 			//if (isNaN(args[0])) {
 				//message.channel.send('Please use a number as your arguments. \n Usage: ' + prefix + 'purge <amount>');
@@ -28,13 +29,13 @@ client.on('message', message => {
 			//message.channel.bulkDelete(100)
 				//.then(msg => message.channel.send('Success deleted ' + msg.size + ' messages'))
 				//.catch(error => message.channel.send('Error: ${error}'))
-				//.then(msg => msg.delete(10000))
+				//.then(msg => msg.delete(5000))
 		}
 		purge();
 	} else if (msg.startsWith(prefix + 'PING')) {
 		message.delete();
 		message.channel.send('pong')
-			.then(msg => msg.delete(10000))
+			.then(msg => msg.delete(5000))
 	} else {
 		message.channel.send('that I do not know');
 	}
