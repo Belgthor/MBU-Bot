@@ -1,15 +1,17 @@
 const Discord = require('discord.js');
+const RichEmbed = require('discord.js');
 const client = new Discord.Client();
 const prefix = '!'
 client.on('ready', () => {
 	console.log('I am ready!');
 });
 client.on('message', message => {
+	if (message.author.bot) { return; }
 	if (!message.content.startsWith(prefix)) { return; }
 	let msg = message.content.toUpperCase();
 	let sender = message.author;
-	let cont = message.content.slice(prefix.length).split(' ');
-	let args = cont.slice(1);
+	let args = message.content.slice(prefix.length).split(/ +/g);
+	let command = args.shift();
 	if (msg.startsWith(prefix + 'PURGE')) {
 		async function purge(){
 			message.delete();
@@ -17,19 +19,25 @@ client.on('message', message => {
 				message.channel.send('You need the \'Server Admin\' role').then(msg => msg.delete(10000))
 				return;
 			}
+			message.channel.fetchMessage()
+				.then(msg => msg.delete())
 			//if (isNaN(args[0])) {
 				//message.channel.send('Please use a number as your arguments. \n Usage: ' + prefix + 'purge <amount>');
 				//return;
 			//}
-			message.channel.bulkDelete(100)
-				.then(msg => message.channel.send('Success deleted ' + msg.size + ' messages'))
-				.catch(error => message.channel.send('Error: ' + error))
-				.then(msg => msg.delete(10000))
+			//message.channel.bulkDelete(100)
+				//.then(msg => message.channel.send('Success deleted ' + msg.size + ' messages'))
+				//.catch(error => message.channel.send('Error: ${error}'))
+				//.then(msg => msg.delete(10000))
 		}
 		purge();
 	} else
 	if (msg.startsWith(prefix + 'PING')) {
-		message.channel.send('pong');
+		const embed = new RichEmbed()
+			.setTitle('Title')
+			.setColor(0xFF0000)
+			.setDescription('Description')
+		message.channel.send(embed);
 	}
 });
 client.login(process.env.BOT_TOKEN);
