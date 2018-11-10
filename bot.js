@@ -19,11 +19,9 @@ client.on('message', message => {
 				return;
 			}
 			message.channel.fetchMessages()
-				.then((msg) => {
-					msg.forEach(x => x.delete())
-					message.channel.send(`Deleted ${msg.size} messages`)
-				})
-				.then(msg => msg.delete(5000))
+				.then(msg => msg.forEach((x) => {if(!x.pinned){x.delete()}}))
+				//.then(msg => message.channel.send(`Deleted ${msg.size} messages`)
+				//.then(msg => msg.delete(5000))
 				.catch(error => message.channel.send(`Error: ${error}`))
 				
 			//if (isNaN(args[0])) {
