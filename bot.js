@@ -7,7 +7,37 @@ const prefix = '!'
 client.on('ready', function () {
 	botChannel.send('I am online')
 	resetAtMidnight()
-});
+})
+client.on('message', function(message){
+	if (message.author.bot) { return }
+	if (!message.content.startsWith(prefix)) { return }
+	if (!message.member.roles.find(x => x.name === 'Server Admin')) {
+		message.delete()
+		message.channel.send('you need the \'Server Admin\' role')
+			.then((msg) => {msg.delete(5000); return})
+			.catch(error => botChannel.send(error))
+	}
+	let msg = message.content.toUpperCase()
+	let sender = message.author
+	let args = message.content.slice(prefix.length).split(' ')
+	let command = args.shift()
+	if (msg.startsWith(prefix + 'PURGE')) {
+		async function purge(){
+			message.channel.fetchMessages()
+				.then(msg => {msg.forEach((x) => {if(!x.pinned){x.delete()}})})
+				.catch(error => botChannel.send(error))
+		}
+		purge()
+	} else if (msg.startsWith(prefix + 'PING')) {
+		message.delete()
+		message.channel.send('pong')
+			.then(msg => msg.delete(5000))
+	} else {
+		message.delete()
+		message.channel.send('command does not exist')
+			.then(msg => msg.delete(5000))
+	}
+})
 function deleteMessages(){
 	botChannel.fetchMessages()
 	.then(msg => {msg.forEach((x) => {if(!x.pinned){x.delete()}})})
@@ -24,4 +54,4 @@ function resetAtMidnight(){
 		resetAtMidnight()
 	}, msToMidnight)
 }
-client.login(process.env.BOT_TOKEN);
+client.login(process.env.BOT_TOKEN)
