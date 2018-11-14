@@ -1,10 +1,11 @@
 const Discord = require('discord.js')
+const client = new Discord.Client()
 const moment = require('moment')
 const tz = require('moment-timezone')
-const client = new Discord.Client()
-const botChannel = client.channels.get('451983884377260033')
+var botChannel
 const prefix = '!'
 client.on('ready', function () {
+	botChannel = client.channels.get('451983884377260033')
 	botChannel.send('I am online')
 	resetAtMidnight()
 })
