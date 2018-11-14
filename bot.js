@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
-const botChannel = client.channels.get('451983884377260033')
 const client = new Discord.Client()
+const botChannel = client.channels.get('451983884377260033')
 const prefix = '!'
 client.on('ready', function () {
 	botChannel.send('I am online')
