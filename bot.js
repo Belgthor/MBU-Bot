@@ -1,4 +1,6 @@
 const Discord = require('discord.js')
+const moment = require('moment')
+const tz = require('moment-timezone')
 const client = new Discord.Client()
 const botChannel = client.channels.get('451983884377260033')
 const prefix = '!'
