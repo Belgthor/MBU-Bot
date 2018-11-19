@@ -2,13 +2,17 @@ const Discord = require('discord.js')
 const client = new Discord.Client()
 const moment = require('moment')
 const tz = require('moment-timezone')
-var botChannel
 const prefix = '!'
+var botChannel
+var questChannel
+var nfChannel
 client.on('ready', function () {
 	botChannel = client.channels.get('451983884377260033')
-	botChannel.send('I am online')
+	questChannel = client.channels.get('508830653991878666')
+	nfChannel = client.channels.get('341625208085413899')
+	botChannel.send('I am ready!')
 	resetAtMidnight()
-})
+});
 client.on('message', function(message){
 	if (message.author.bot) { return }
 	if (!message.content.startsWith(prefix)) { return }
@@ -30,17 +34,19 @@ client.on('message', function(message){
 		}
 		purge()
 	} else if (msg.startsWith(prefix + 'PING')) {
-		message.delete()
-		message.channel.send('pong')
-			.then(msg => msg.delete(5000))
+			message.delete()
+			message.channel.send('pong')
+				.then(msg => msg.delete(5000))
+				.catch(error => botChannel.send(error))
 	} else {
 		message.delete()
 		message.channel.send('command does not exist')
 			.then(msg => msg.delete(5000))
+			.catch(error => botChannel.send(error))
 	}
 })
 function deleteMessages(){
-	botChannel.fetchMessages()
+	questChannel.fetchMessages()
 	.then(msg => {msg.forEach((x) => {if(!x.pinned){x.delete()}})})
 	.catch(error => botChannel.send(error))
 }
